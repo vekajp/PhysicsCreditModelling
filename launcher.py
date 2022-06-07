@@ -6,7 +6,7 @@ import numpy as np
 t_max = 50
 dt = 1e-3
 w = 0.1
-gamma = 1e-2
+gamma = 1e-3
 
 d_12 = 1.0
 e0 = 1.0
@@ -55,6 +55,23 @@ def test_gamma_dependency():
         time, c1, c2 = fading.solve_equations(t_max, dt, point[0], point[1], omega_r, dw, gammal, e1, e2, h_bar)
         graphing.make_graph(time, c1, c2, "Fading " + title)
 
+
+def draw_graphs_no_fading():
+    for i in range(1, 4):
+        time, c1, c2 = no_fading.solve_equations(10, 1e-1, starting_points[i - 1][0], starting_points[i - 1][1],
+                                                 omega_r, dw, gamma, e1, e2, h_bar)
+        graphing.draw_sphere(time, c1, c2, "No_fading" + str(i))
+
+
+def draw_graphs_with_fading():
+    for i in range(1, 4):
+        time, c1, c2 = fading.solve_equations(20, 1e-1, starting_points[i - 1][0], starting_points[i - 1][1], omega_r,
+                                              dw, 1e-1, e1, e2, h_bar)
+        graphing.draw_sphere(time, c1, c2, "Fading" + str(i))
+
+
 # test_starting_point()
-test_delta_dependency()
+# test_delta_dependency()
 # test_gamma_dependency()
+draw_graphs_no_fading()
+draw_graphs_with_fading()
